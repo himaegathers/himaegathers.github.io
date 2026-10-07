@@ -95,7 +95,7 @@
     '<circle cx="24" cy="13.8" r=".9" fill="#5a3f28"/><circle cx="36" cy="13.8" r=".9" fill="#5a3f28"/>' +
     '<ellipse cx="30" cy="31" rx="1.7" ry="8" fill="#5a3f28"/><circle cx="30" cy="22.6" r="2" fill="#5a3f28"/>';
   const BF_SVG =
-    '<svg viewBox="0 0 60 60" aria-hidden="true"><g class="wings"><g>' + WING + '</g>' +
+    '<svg viewBox="0 0 60 60" width="100%" height="100%" style="display:block;overflow:visible" aria-hidden="true"><g class="wings"><g>' + WING + '</g>' +
     '<g transform="translate(60 0) scale(-1 1)">' + WING + '</g></g>' + BODY + '</svg>';
 
   // spots on the flower corners where butterflies like to land (fractions of each flower image)
@@ -109,6 +109,7 @@
     const flowers = [document.querySelector('.f-tl'), document.querySelector('.f-br')];
     const layer = document.createElement('div');
     layer.className = 'butterflies';
+    layer.style.cssText = 'position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden';
     layer.setAttribute('aria-hidden', 'true');
     page.appendChild(layer);
 
@@ -157,7 +158,7 @@
       const el = document.createElement('div');
       el.className = 'bf';
       const size = W < 480 ? rand(30, 42) : rand(38, 50);
-      el.style.cssText = `--sz:${size.toFixed(0)}px;--a:${pal.a};--b:${pal.b};--c:${pal.c};--fs:${rand(.3, .46).toFixed(2)}s`;
+      el.style.cssText = `position:absolute;top:0;left:0;width:${size.toFixed(0)}px;height:${size.toFixed(0)}px;margin:${(-size / 2).toFixed(1)}px 0 0 ${(-size / 2).toFixed(1)}px;--sz:${size.toFixed(0)}px;--a:${pal.a};--b:${pal.b};--c:${pal.c};--fs:${rand(.3, .46).toFixed(2)}s`;
       el.innerHTML = BF_SVG;
       layer.appendChild(el);
       const dir = rand(0, Math.PI * 2);
@@ -254,6 +255,7 @@
     if (!page || reduce) return;
     const wrap = document.createElement('div');
     wrap.className = 'pollen-layer';
+    wrap.style.cssText = 'position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden';
     wrap.setAttribute('aria-hidden', 'true');
     const n = innerWidth < 480 ? 10 : 14, frag = document.createDocumentFragment();
     for (let i = 0; i < n; i++) {
